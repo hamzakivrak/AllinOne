@@ -10,13 +10,13 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#311B92">
     
-    <title>HK Mobil Otomasyon v1.2.1</title>
+    <title>HK Mobil Otomasyon v1.3</title>
     <style>
         :root {
             --primary: #311B92;
             --secondary: #FFCA28;
-            --group1: #00796B; /* VM, ITOS, MITOS rengi */
-            --group2: #D32F2F; /* EBYS, E-Posta rengi */
+            --group1: #00796B; /* VM, ITOS, MITOS */
+            --group2: #D32F2F; /* EBYS, E-Posta */
             --bg: #ECEFF1;
             --card-bg: #FFFFFF;
             --text: #263238;
@@ -107,7 +107,6 @@
             gap: 12px;
         }
 
-        /* 2 sütunu birden kaplayan buton stili */
         .span-2 {
             grid-column: span 2;
             flex-direction: row;
@@ -126,7 +125,6 @@
             font-weight: bold;
         }
 
-        /* Toast Bildirimi */
         #toast {
             visibility: hidden;
             min-width: 250px;
@@ -154,14 +152,14 @@
         .span-2 .icon { font-size: 28px; margin-right: 10px; }
         .g1-border { border-bottom: 3px solid var(--group1); }
         .g2-border { border-bottom: 3px solid var(--group2); }
-        .g3-border { border-bottom: 3px solid #FF9800; } /* Kişisel Araçlar */
+        .g3-border { border-bottom: 3px solid #FF9800; }
     </style>
 </head>
 <body>
 
     <div class="header">
         <strong style="font-size: 18px;">HK MOBİL OTOMASYON</strong>
-        <div style="font-size: 12px; opacity: 0.8; margin-top: 4px;">Kurumsal İşletim Merkezi v1.2.1</div>
+        <div style="font-size: 12px; opacity: 0.8; margin-top: 4px;">Kurumsal İşletim Merkezi v1.3</div>
     </div>
 
     <div class="vault-section" id="kasa">
@@ -174,7 +172,7 @@
         <input type="password" id="pass_grup1" placeholder="Şifrenizi girin">
         
         <div class="input-label" style="color: var(--group2);">🔑 Grup 2 (Belgenet, E-Posta)</div>
-        <input type="password" id="pass_grup2" placeholder="Şifrenizi girin (Portal manuel)">
+        <input type="password" id="pass_grup2" placeholder="Şifrenizi girin">
         
         <button class="btn btn-save" onclick="verileriKaydet()">💾 Cihaza Kaydet</button>
         <div id="saveStatus" class="status-badge">✅ Veriler Başarıyla Kaydedildi!</div>
@@ -182,8 +180,8 @@
 
     <div class="links-grid">
         
-        <button class="btn btn-link span-2" style="border: 2px solid #1976D2; background-color: #E3F2FD;" onclick="sistemeGit('https://portal.csgb.gov.tr/my.policy', 0)">
-            <span class="icon">🚀</span> <span style="font-size: 16px; font-weight: bold; color: #1976D2;">1. ADIM: VPN PORTALINA GİR</span>
+        <button class="btn btn-link span-2" style="border: 2px solid #1976D2; background-color: #E3F2FD;" onclick="window.location.href='f5-vpn://'">
+            <span class="icon">🚀</span> <span style="font-size: 16px; font-weight: bold; color: #1976D2;">1. ADIM: F5 ACCESS'İ AÇ</span>
         </button>
 
         <button class="btn btn-link g1-border" onclick="sistemeGit('https://app2.csgb.gov.tr/verimerkezi/', 1)">
@@ -223,7 +221,6 @@
     <div id="toast">📋 Şifre kopyalandı! Yapıştırabilirsiniz.</div>
 
     <script>
-        // Sayfa yüklendiğinde verileri getir
         window.onload = function() {
             if(localStorage.getItem('hk_user')) {
                 document.getElementById('username').value = localStorage.getItem('hk_user');
@@ -247,29 +244,24 @@
         }
 
         function sistemeGit(url, grupId) {
-            // grupId 0 ise (VPN, Hitos, Dayanak Bul) doğrudan git, şifre KOPYALAMA
             if (grupId === 0) {
                 window.open(url, '_blank');
                 return;
             }
 
-            // İlgili grubun şifresini bul (Grup 1 veya Grup 2)
             const passKey = (grupId === 1) ? 'hk_p1' : 'hk_p2';
             const encodedPass = localStorage.getItem(passKey);
             
             if(encodedPass) {
                 const pass = atob(encodedPass);
-                // Şifreyi panoya kopyala
                 navigator.clipboard.writeText(pass).then(() => {
                     toastGoster();
-                    // 1 saniye bekleyip siteyi aç (Toast'ı görebilmek için)
                     setTimeout(() => { window.open(url, '_blank'); }, 1000);
                 }).catch(err => {
                     console.log('Kopyalama başarısız, manuel girilecek.');
                     window.open(url, '_blank');
                 });
             } else {
-                // Şifre kayıtlı değilse direkt git
                 window.open(url, '_blank');
             }
         }
