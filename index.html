@@ -10,7 +10,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#311B92">
     
-    <title>HK Mobil Otomasyon v1.2</title>
+    <title>HK Mobil Otomasyon v1.2.1</title>
     <style>
         :root {
             --primary: #311B92;
@@ -161,7 +161,7 @@
 
     <div class="header">
         <strong style="font-size: 18px;">HK MOBİL OTOMASYON</strong>
-        <div style="font-size: 12px; opacity: 0.8; margin-top: 4px;">Kurumsal İşletim Merkezi v1.2</div>
+        <div style="font-size: 12px; opacity: 0.8; margin-top: 4px;">Kurumsal İşletim Merkezi v1.2.1</div>
     </div>
 
     <div class="vault-section" id="kasa">
@@ -173,8 +173,8 @@
         <div class="input-label" style="color: var(--group1);">🔑 Grup 1 (VM, İTOS, MİTOS)</div>
         <input type="password" id="pass_grup1" placeholder="Şifrenizi girin">
         
-        <div class="input-label" style="color: var(--group2);">🔑 Grup 2 (Portal, Belgenet, E-Posta)</div>
-        <input type="password" id="pass_grup2" placeholder="Şifrenizi girin">
+        <div class="input-label" style="color: var(--group2);">🔑 Grup 2 (Belgenet, E-Posta)</div>
+        <input type="password" id="pass_grup2" placeholder="Şifrenizi girin (Portal manuel)">
         
         <button class="btn btn-save" onclick="verileriKaydet()">💾 Cihaza Kaydet</button>
         <div id="saveStatus" class="status-badge">✅ Veriler Başarıyla Kaydedildi!</div>
@@ -182,7 +182,7 @@
 
     <div class="links-grid">
         
-        <button class="btn btn-link span-2" style="border: 2px solid #1976D2; background-color: #E3F2FD;" onclick="sistemeGit('https://portal.csgb.gov.tr/my.policy', 2)">
+        <button class="btn btn-link span-2" style="border: 2px solid #1976D2; background-color: #E3F2FD;" onclick="sistemeGit('https://portal.csgb.gov.tr/my.policy', 0)">
             <span class="icon">🚀</span> <span style="font-size: 16px; font-weight: bold; color: #1976D2;">1. ADIM: VPN PORTALINA GİR</span>
         </button>
 
@@ -247,7 +247,7 @@
         }
 
         function sistemeGit(url, grupId) {
-            // grupId 0 ise (Hitos, Dayanak Bul gibi) doğrudan git, şifre kopyalama
+            // grupId 0 ise (VPN, Hitos, Dayanak Bul) doğrudan git, şifre KOPYALAMA
             if (grupId === 0) {
                 window.open(url, '_blank');
                 return;
